@@ -2,59 +2,97 @@
   <v-app>
     <v-app-bar
       app
+      dense
       color="primary"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      <v-toolbar-title>Campuskarte Uni Trier</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
     </v-app-bar>
 
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+    >
+      <v-list
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <h1>Layer-Optionen</h1>
+          <v-divider class="my-2"></v-divider>
+          <v-btn
+            target="_blank"
+            text
+            style="background-color: lightgrey"
+          >
+          <span>Hinzufügen</span>
+          </v-btn>
+          <LayerOptions layer-name="Testlayer" has-layer-settings="true"/>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+
     <v-main>
-      <HelloWorld/>
+      <MapView/>
     </v-main>
+    <v-footer padless class="d-none d-lg-block">
+    <v-col
+      class="text-center"
+      cols="12"
+    >
+      {{ new Date().getFullYear() }} — <strong>Fabian Sponholz</strong> (Projekt Seminar Kartographische Informatik)
+    </v-col>
+  </v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import MapView from './components/Map.vue';
+import LayerOptions from './components/LayerOptions.vue';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
-  },
+    MapView,
+    LayerOptions
+},
 
   data: () => ({
-    //
+    drawer: false,
+    group: null,
   }),
+
+  watch: {
+      group () {
+        //this.drawer = false
+      },
+    },
 };
 </script>
+
+<style>
+@import url('../node_modules/ol/ol.css');
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+ 
+html, body, #map, #app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
