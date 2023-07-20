@@ -27,14 +27,27 @@
         >
           <h1>Layer-Optionen</h1>
           <v-divider class="my-2"></v-divider>
-          <v-btn
-            target="_blank"
-            text
-            style="background-color: lightgrey"
-          >
-          <span>Hinzufügen</span>
-          </v-btn>
-          <LayerOptions layer-name="Testlayer" has-layer-settings="true"/>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="primary"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                Hinzufügen
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item
+                v-for="layer in availableLayers"
+                :key="availableLayers.indexOf(layer)"
+              >
+                <v-list-item-title>{{ layer.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+          <LayerOptions v-for="layer in activeLayers" :layer-container="availableLayers[layer]" :key="availableLayers.indexOf(layer)"/>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -57,6 +70,7 @@
 <script>
 import MapView from './components/Map.vue';
 import LayerOptions from './components/LayerOptions.vue';
+import { defineLayerContainer } from './assets/js/defineLayerContainer';
 
 export default {
   name: 'App',
@@ -69,13 +83,18 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
+
+    availableLayers: defineLayerContainer(),
+    activeLayers:[
+      0,
+    ]
   }),
 
   watch: {
       group () {
         //this.drawer = false
       },
-    },
+    },  
 };
 </script>
 

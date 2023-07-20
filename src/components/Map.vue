@@ -4,31 +4,34 @@
 
 <script>
 import { Map, View } from 'ol';
-import { defineLayerContainer } from '@/assets/js/defineLayerContainer';
+import { defineBaseLayers } from '@/assets/js/defineLayerContainer';
 
-const layers = defineLayerContainer();
+const baseLayers = defineBaseLayers();
 
 export default {
     name: 'MapView',
 
     data() {
         return {
-            active_layers: [
-                layers['dop'],
-                layers['grenzen'],
-            ]
+            map: null
+        }
+    },
+    methods: {
+        addLayer(layer) {
+            console.log("yayy" + layer);
         }
     },
     mounted() {
         console.log("creating map");
         this.map = new Map({
             target: 'map',
-            layers: this.active_layers,
+            layers: baseLayers,
             view: new View({
                 center: [40818900, 6402500],
                 zoom: 16
             })
         })
     }
+    
 }
 </script>

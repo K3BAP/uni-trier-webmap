@@ -2,7 +2,7 @@
     <v-container>
         <v-card class="px-4 pb-5">
             <v-row class="mt-1">
-                <h3>{{layerName}}</h3>
+                <h3>{{layerContainer.title}}</h3>
             </v-row>
             <v-row class="">
                 <v-slider
@@ -26,7 +26,7 @@
                     x-small
                 ><v-icon> mdi-arrow-down </v-icon></v-btn>
                 <v-btn
-                    v-if="hasLayerSettings==='true'"
+                    v-if="layerContainer.hasSettings"
                     class="mx-1"
                     elevation="2"
                     fab
@@ -46,7 +46,7 @@
 <script>
 export default {
     name: 'LayerOptions',
-    props: ['layerName', 'hasLayerSettings'],
+    props: ['layerContainer'],
 
     data() {
         return {
