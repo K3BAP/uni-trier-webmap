@@ -52,6 +52,9 @@ export default {
         return {
             slider: 50,
         }
+    },
+    mounted() {
+        this.slider = this.layerContainer.layer.getOpacity() * 100;
     }
 }
 </script>

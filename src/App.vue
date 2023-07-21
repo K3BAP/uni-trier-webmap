@@ -20,7 +20,7 @@
               </v-btn>
             </template>
             <v-list>
-              <v-list-item v-for="layer in availableLayers" :key="availableLayers.indexOf(layer)">
+              <v-list-item v-for="layer in availableLayers" :key="availableLayers.indexOf(layer)" :onclick="addLayer(layer)">
                 <v-list-item-title>{{ layer.title }}</v-list-item-title>
               </v-list-item>
             </v-list>
@@ -83,7 +83,14 @@ export default {
       this.map.addLayer(this.availableLayers[layerId].layer);
     })
   },
+  methods: {
+    addLayer(layerId) {
+      if (this.activeLayers.includes(layerId)) return;
 
+      //this.activeLayers.push(layerId);
+      //this.map.addLayer(this.availableLayers[layerId].layer);
+    }
+  },
   watch: {
     group() {
       //this.drawer = false

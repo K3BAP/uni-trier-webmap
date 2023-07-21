@@ -43,7 +43,8 @@ export function defineLayerContainer() {
           url: 'http://localhost:8080/geoserver/wms',
           params: { 'LAYERS': 'PROJ:gebaeude', 'TILED': true },
           serverType: 'geoserver'
-        })
+        }),
+        opacity: 0.7
       })
     },
     {
