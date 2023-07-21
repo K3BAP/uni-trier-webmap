@@ -20,13 +20,17 @@
               </v-btn>
             </template>
             <v-list>
-              <v-list-item v-for="layer in availableLayers" :key="availableLayers.indexOf(layer)" @click="addLayer(availableLayers.indexOf(layer))">
+              <v-list-item v-for="layer in availableLayersNotActive" :key="availableLayers.indexOf(layer)" @click="addLayer(layer)">
                 <v-list-item-title>{{ layer.title }}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
-          <LayerOptions v-for="layer in activeLayers" :layer-container="availableLayers[layer]"
-            :key="availableLayers.indexOf(layer)" />
+          <LayerOptions 
+            v-for="layerId in activeLayers" 
+            :layer-container="availableLayers[layerId]"
+            :key="availableLayers.indexOf(layerId)" 
+            @delete="deleteLayer(layerId)"
+          />
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -84,13 +88,19 @@ export default {
     })
   },
   methods: {
-    addLayer(layerId) {
-      console.log(layerId)
+    addLayer(layerContainer) {
+      let layerId = this.availableLayers.indexOf(layerContainer);
       if (this.activeLayers.includes(layerId)) return;
 
       this.activeLayers.push(layerId);
-      console.log(this.activeLayers)
-      this.map.addLayer(this.availableLayers[layerId].layer);
+      this.map.addLayer(layerContainer.layer);
+    },
+    deleteLayer(layerId) {
+      console.log("delete layer");
+      let layerContainer = this.availableLayers[layerId];
+      
+      delete this.activeLayers[this.activeLayers.indexOf(layerId)];
+      this.map.removeLayer(layerContainer.layer);
     }
   },
   watch: {
@@ -98,6 +108,18 @@ export default {
       //this.drawer = false
     },
   },
+  computed: {
+    availableLayersNotActive() {
+      let layers = [];
+      this.availableLayers.forEach(layerContainer => {
+        if (!this.activeLayers.includes(this.availableLayers.indexOf(layerContainer))) {
+          layers.push(layerContainer);
+        }
+      })
+
+      return layers;
+    }
+  }
 };
 </script>
 

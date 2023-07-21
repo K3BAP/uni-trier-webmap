@@ -37,6 +37,7 @@
                     elevation="2"
                     fab
                     x-small
+                    @click="deleteLayer"
                 >
                 <v-icon> mdi-close </v-icon></v-btn>
             </v-row>
@@ -51,6 +52,11 @@ export default {
     data() {
         return {
             slider: 50,
+        }
+    },
+    methods: {
+        deleteLayer() {
+            this.$emit('delete');
         }
     },
     mounted() {
