@@ -60,7 +60,7 @@ export function defineLayerContainer() {
     },
     {
       title: 'Parkplätze',
-      hasSettings: true,
+      hasSettings: false,
       layer: new Tile({
         source: new TileWMS({
           url: 'http://localhost:8080/geoserver/wms',
@@ -84,7 +84,7 @@ export function defineLayerContainer() {
     },
     {
       title: 'Sportanlagen',
-      hasSettings: true,
+      hasSettings: false,
       layer: new Tile({
         source: new TileWMS({
           url: 'http://localhost:8080/geoserver/wms',
@@ -96,7 +96,7 @@ export function defineLayerContainer() {
     },
     {
       title: 'Gewächshäuser',
-      hasSettings: true,
+      hasSettings: false,
       layer: new Tile({
         source: new TileWMS({
           url: 'http://localhost:8080/geoserver/wms',
@@ -108,7 +108,7 @@ export function defineLayerContainer() {
     },
     {
       title: 'Wasserfläche',
-      hasSettings: true,
+      hasSettings: false,
       layer: new Tile({
         source: new TileWMS({
           url: 'http://localhost:8080/geoserver/wms',
