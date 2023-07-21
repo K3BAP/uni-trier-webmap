@@ -30,6 +30,8 @@
             :layer-container="availableLayers[layerId]"
             :key="availableLayers.indexOf(layerId)" 
             @delete="deleteLayer(layerId)"
+            @moveup="moveUp(layerId)"
+            @movedown="moveDown(layerId)"
           />
         </v-list-item-group>
       </v-list>
@@ -86,6 +88,8 @@ export default {
     this.activeLayers.forEach(layerId => {
       this.map.addLayer(this.availableLayers[layerId].layer);
     })
+
+    this.orderLayers();
   },
   methods: {
     addLayer(layerContainer) {
@@ -94,6 +98,7 @@ export default {
 
       this.activeLayers.unshift(layerId);
       this.map.addLayer(layerContainer.layer);
+      this.orderLayers();
     },
     deleteLayer(layerId) {
       console.log("delete layer");
@@ -102,6 +107,33 @@ export default {
 
       this.activeLayers.splice(indexOfLayer, 1);
       this.map.removeLayer(layerContainer.layer);
+    },
+    moveUp(layerId) {
+      const layerIndex = this.activeLayers.indexOf(layerId)
+      console.log(layerIndex);
+      if (layerIndex == 0) return;
+
+      // swap positions in activeLayers Array
+      const temp = this.activeLayers.splice(layerIndex, 1);
+      this.activeLayers.splice(layerIndex - 1, 0, temp);
+
+      this.orderLayers();
+    },
+    moveDown(layerId) {
+      const layerIndex = this.activeLayers.indexOf(layerId)
+      console.log(layerIndex);
+      if (layerIndex == this.activeLayers.length - 1) return;
+
+      // swap positions in activeLayers Array
+      const temp = this.activeLayers.splice(layerIndex, 1);
+      this.activeLayers.splice(layerIndex + 1, 0, temp);
+
+      this.orderLayers();
+    },
+    orderLayers() {
+      this.activeLayers.forEach(layerId => {
+        this.availableLayers[layerId].layer.setZIndex(this.activeLayers.length - 1 - this.activeLayers.indexOf(layerId));
+      })
     }
   },
   computed: {
