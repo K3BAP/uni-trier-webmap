@@ -92,21 +92,17 @@ export default {
       let layerId = this.availableLayers.indexOf(layerContainer);
       if (this.activeLayers.includes(layerId)) return;
 
-      this.activeLayers.push(layerId);
+      this.activeLayers.unshift(layerId);
       this.map.addLayer(layerContainer.layer);
     },
     deleteLayer(layerId) {
       console.log("delete layer");
       let layerContainer = this.availableLayers[layerId];
-      
-      delete this.activeLayers[this.activeLayers.indexOf(layerId)];
+      let indexOfLayer = this.activeLayers.indexOf(layerId);
+
+      this.activeLayers.splice(indexOfLayer, 1);
       this.map.removeLayer(layerContainer.layer);
     }
-  },
-  watch: {
-    group() {
-      //this.drawer = false
-    },
   },
   computed: {
     availableLayersNotActive() {
