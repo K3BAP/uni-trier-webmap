@@ -37,10 +37,10 @@
       </v-list>
     </v-navigation-drawer>
 
-
     <v-main>
       <div id="map"></div>
     </v-main>
+
     <v-footer padless class="d-none d-lg-block">
       <v-col class="text-center" cols="12">
         {{ new Date().getFullYear() }} — <strong>Fabian Sponholz</strong> (Projekt Seminar Kartographische Informatik)
