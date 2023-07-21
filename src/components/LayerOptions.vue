@@ -16,13 +16,15 @@
             </v-row>
         </v-card>
 
-        <v-dialog v-model="dialog" max-width="290">
+        <!-- Pop-Up Dialog für den Gebäude-Layer -->
+        <v-dialog v-if="layerContainer.title == 'Gebäude'" v-model="dialog" max-width="290">
             <v-card class="rounded-xl">
                 <v-card-title class="text-h5">
                     Gebäude suchen
                 </v-card-title>
 
                 <v-text-field
+                    v-model="geb_searchstring"
                     class="mx-2"
                     label="Gebäude"
                     placeholder="alle"
@@ -31,7 +33,10 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="green darken-1" text @click="dialog = false">
+                    <v-btn color="green darken-1" text @click="geb_searchstring=''; gebSearch();">
+                        Verwerfen
+                    </v-btn>
+                    <v-btn color="green darken-1" text @click="gebSearch()">
                         Anwenden
                     </v-btn>
                 </v-card-actions>
@@ -49,6 +54,7 @@ export default {
             slider: 50,
             locked: false,
             dialog: false,
+            geb_searchstring: ''
         }
     },
     methods: {
@@ -66,6 +72,10 @@ export default {
             console.log('setting opacity ' + opacity)
             this.layerContainer.layer.setOpacity(this.slider / 100);
         },
+        gebSearch() {
+            this.layerContainer.layer.getSource().updateParams({'CQL_FILTER': 'Gebaeude like \'%' + this.geb_searchstring + '%\''});
+            this.dialog=false;
+        }
     },
     mounted() {
         this.slider = this.layerContainer.layer.getOpacity() * 100;
