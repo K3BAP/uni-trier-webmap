@@ -58,6 +58,66 @@ export function defineLayerContainer() {
         })
       })
     },
+    {
+      title: 'Parkplätze',
+      hasSettings: true,
+      layer: new Tile({
+        source: new TileWMS({
+          url: 'http://localhost:8080/geoserver/wms',
+          params: { 'LAYERS': 'PROJ:parkplaetze', 'TILED': true },
+          serverType: 'geoserver'
+        }),
+        opacity: 0.7
+      })
+    },
+    {
+      title: 'Wohnheime',
+      hasSettings: true,
+      layer: new Tile({
+        source: new TileWMS({
+          url: 'http://localhost:8080/geoserver/wms',
+          params: { 'LAYERS': 'PROJ:wohnheime', 'TILED': true },
+          serverType: 'geoserver'
+        }),
+        opacity: 0.7
+      })
+    },
+    {
+      title: 'Sportanlagen',
+      hasSettings: true,
+      layer: new Tile({
+        source: new TileWMS({
+          url: 'http://localhost:8080/geoserver/wms',
+          params: { 'LAYERS': 'PROJ:sportanlage', 'TILED': true },
+          serverType: 'geoserver'
+        }),
+        opacity: 0.7
+      })
+    },
+    {
+      title: 'Gewächshäuser',
+      hasSettings: true,
+      layer: new Tile({
+        source: new TileWMS({
+          url: 'http://localhost:8080/geoserver/wms',
+          params: { 'LAYERS': 'PROJ:gewaechshaeuser', 'TILED': true },
+          serverType: 'geoserver'
+        }),
+        opacity: 0.7
+      })
+    },
+    {
+      title: 'Wasserfläche',
+      hasSettings: true,
+      layer: new Tile({
+        source: new TileWMS({
+          url: 'http://localhost:8080/geoserver/wms',
+          params: { 'LAYERS': 'PROJ:wasserflaeche', 'TILED': true },
+          serverType: 'geoserver'
+        }),
+        opacity: 0.7
+      })
+    },
   ];
 
   return layers;
